@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         authorization Extractor(β)
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.6
 // @description  Extract Discord Token and display it in a draggable and resizable box without popups
 // @author       AARR
 // @match        https://discord.com/*
@@ -150,12 +150,16 @@
         console.log('Toggle image created and event listener added');
     }
 
+    function maskToken(token) {
+        return '*'.repeat(token.length);
+    }
+
     function getToken(tokenDisplay) {
         console.log('Attempting to retrieve token');
         let token = localStorage.getItem('token');
         if (token) {
             token = token.slice(1, -1);
-            tokenDisplay.textContent = token;
+            tokenDisplay.textContent = maskToken(token);
             tokenDisplay.setAttribute('data-token', token);
             console.log('Token successfully retrieved:', token);
         } else {
